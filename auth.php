@@ -14,9 +14,19 @@ try {
     $query->bindParam('email', $email, PDO::PARAM_STR);
     $query->bindValue('password', md5($password), PDO::PARAM_STR);
     $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    $row = $query->fetch();
+    if (!$row) { 
+        echo header('HTTP/1.1 200 OK');
+        echo "Wrong email or password!";
+    } else {         
+        echo header('HTTP/1.1 200 OK');        
+        echo "Success! Loggining in...";
+    }  
+
+    /* $results = $query->fetchAll(PDO::FETCH_ASSOC);
     echo header('HTTP/1.1 200 OK');
-    echo json_encode($results);
+    echo json_encode($results); */
 }
 catch (PDOException $pdoex) {
     returnError($pdoex);
