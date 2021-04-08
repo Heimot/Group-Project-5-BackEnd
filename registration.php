@@ -25,7 +25,7 @@ try {
     $query->bindValue(':phone',$phone,PDO::PARAM_STR);
     $query->execute();
     echo header('HTTP/1.1 200 OK');
-    echo "Success!";   
+    echo "Success! Registered {$email}";   
 }
 catch (PDOException $pdoex) {
     returnError($pdoex);
