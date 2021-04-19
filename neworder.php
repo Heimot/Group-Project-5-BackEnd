@@ -37,10 +37,10 @@ try {
     $query->bindValue(':phone',$phone,PDO::PARAM_STR);
     $query->execute();
 
-    $lastorderid = $db->lastInsertId();
+    //$lastorderid = $db->lastInsertId();
 
-    echo header('HTTP/1.1 200 OK');
     $lastinsertid = array('LastInsertID' => $lastorderid = $db->lastInsertId());
+    echo header('HTTP/1.1 200 OK');
     echo json_encode($lastinsertid); 
 }
 catch (PDOException $pdoex) {
