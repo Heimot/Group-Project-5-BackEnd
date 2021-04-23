@@ -6,7 +6,7 @@ require_once 'inc/functions.php';
 // Noudetaan tietokannasta halutut tiedot
 try {
    $db = slDB();
-   $sql = 'select * from category';
+   $sql = 'select * from category where name <> "<ei valittu>"';
    $query = $db->query($sql);
    $results = $query->fetchAll(PDO::FETCH_ASSOC);
    echo header ('http1.1 200 OK');
