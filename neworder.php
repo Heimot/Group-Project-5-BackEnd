@@ -16,6 +16,7 @@ $address = filter_var($input->address, FILTER_SANITIZE_STRING);
 $postalcode = filter_var($input->postalcode, FILTER_SANITIZE_STRING);
 $city = filter_var($input->city, FILTER_SANITIZE_STRING);
 $phone = filter_var($input->phone, FILTER_SANITIZE_STRING);
+$cart = $input->cart;
 
 try {
     $db = slDB();
@@ -25,6 +26,7 @@ try {
     } else {
         $query->bindValue(':customerid',null,PDO::PARAM_STR);
     }
+    
     
     $query->bindValue(':price',$price,PDO::PARAM_STR);
     $query->bindValue(':shipping',$shipping,PDO::PARAM_STR);    
@@ -37,7 +39,14 @@ try {
     $query->bindValue(':phone',$phone,PDO::PARAM_STR);
     $query->execute();
 
-    $lastinsertid = array('LastInsertID' => $lastorderid = $db->lastInsertId());
+    $lastinsertid = $db->lastInsertId();
+
+    foreach($cart as $product) {
+        $sql = "insert into orderdetails (`orderid`, `productid`, `amount`) values(" . $lastinsertid . "," . $product->id . "," . $product->amount . ")";
+        $query = $db->query($sql);
+        $db->lastInsertId();
+    }
+
     echo header('HTTP/1.1 200 OK');
     echo json_encode($lastinsertid); 
 }
