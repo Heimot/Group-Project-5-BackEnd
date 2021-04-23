@@ -31,7 +31,7 @@ try {
         echo header('HTTP/1.1 200 OK');        
         echo "Success! Password was changed";
     }  
-
+}
     catch (PDOException $pdoex) {
         returnError($pdoex);
      }
