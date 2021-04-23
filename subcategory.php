@@ -3,10 +3,12 @@
 require_once 'inc/headers.php';
 require_once 'inc/functions.php';
 
+$id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+
 // Noudetaan tietokannasta halutut tiedot
 try {
    $db = slDB();
-   $sql = 'select * from subcategory';
+   $sql = 'select * from subcategory where categoryID = ' . $id;
    $query = $db->query($sql);
    $results = $query->fetchAll(PDO::FETCH_ASSOC);
    echo header ('http1.1 200 OK');
