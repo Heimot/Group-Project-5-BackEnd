@@ -6,7 +6,7 @@ require_once 'inc/functions.php';
 // Noudetaan tietokannasta halutut tiedot
 try {
    $db = slDB();
-   $sql = 'select * from product';
+   $sql = 'select product.id, product.name, product.price, product.description, product.weight, product.stock, productpictures.picture, productpictures.productId from product left join productpictures on product.id = productpictures.productId GROUP BY product.id';
    $query = $db->query($sql);
    $results = $query->fetchAll(PDO::FETCH_ASSOC);
    echo header ('http1.1 200 OK');
