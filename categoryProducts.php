@@ -16,7 +16,7 @@ if ($type < 2) {
 try {
    $db = slDB();
 
-   $sql = "select product.name, product.price, product.id, product.stock, product.description from `product` inner join category on `categoryID` = category.id  " . $method . "";
+   $sql = "select product.name, product.price, product.id, product.stock, product.description, productpictures.picture from `product` left join productpictures on product.id = productpictures.productId inner join category on `categoryID` = category.id  " . $method . " GROUP BY product.id ";
 
    $query = $db->query($sql);
 
