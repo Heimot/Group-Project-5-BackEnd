@@ -18,7 +18,7 @@ try {
     $row = $query->fetch();
     if (!$row) { 
         echo header('HTTP/1.1 200 OK');
-        echo "Wrong email or password!";
+        echo "Väärä sähköpostiosoite tai salasana!";
     } else {         
         echo header('HTTP/1.1 200 OK');        
         echo "Success! Loggining in...";

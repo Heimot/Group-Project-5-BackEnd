@@ -16,7 +16,7 @@ try {
     $db = slDB();
     $query = $db->prepare('insert into customers(email,password,firstname,lastname,address,postalcode,city,phone) values (:email,:password,:firstname,:lastname,:address,:postalcode,:city,:phone)');
     $query->bindValue(':email',$email,PDO::PARAM_STR);
-    $query->bindValue(':password',md5($password),PDO::PARAM_STR);
+    $query->bindValue(':password',password_hash($password,PASSWORD_DEFAULT),PDO::PARAM_STR);
     $query->bindValue(':firstname',$firstname,PDO::PARAM_STR);
     $query->bindValue(':lastname',$lastname,PDO::PARAM_STR);
     $query->bindValue(':address',$address,PDO::PARAM_STR);
@@ -25,7 +25,7 @@ try {
     $query->bindValue(':phone',$phone,PDO::PARAM_STR);
     $query->execute();
     echo header('HTTP/1.1 200 OK');
-    echo "Success! Registered {$email}";   
+    echo "Rekisteröityminen onnistui sähköpostilla {$email}";
 }
 catch (PDOException $pdoex) {
     returnError($pdoex);
