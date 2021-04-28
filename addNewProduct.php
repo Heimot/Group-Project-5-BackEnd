@@ -25,7 +25,7 @@ try {
     $query->bindValue(':stock',$stock,PDO::PARAM_INT);
     $query->execute();
     echo header('HTTP/1.1 200 OK');
-    echo "Lisäsit uuden tuotteen!";   
+    echo "Lisäsit uuden tuotteen! {$id} ";   
 }
 catch (PDOException $pdoex) {
     returnError($pdoex);
