@@ -2,14 +2,15 @@
 require_once 'inc/functions.php';
 require_once 'inc/headers.php';
 
-$id = filter_input(INPUT_POST, "id", FILTER_SANITIZE_NUMBER_INT);
-$email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_STRING);
-$firstname = filter_input(INPUT_POST, "firstname", FILTER_SANITIZE_STRING);
-$lastname = filter_input(INPUT_POST, "lastname", FILTER_SANITIZE_STRING);
-$address = filter_input(INPUT_POST, "address", FILTER_SANITIZE_STRING);
-$postalcode = filter_input(INPUT_POST, "postalcode", FILTER_SANITIZE_STRING);
-$city = filter_input(INPUT_POST, "city", FILTER_SANITIZE_STRING);
-$phone = filter_input(INPUT_POST, "phone", FILTER_SANITIZE_STRING);
+$input = json_decode(file_get_contents('php://input'));
+$id = filter_var($input->id, FILTER_SANITIZE_NUMBER_INT);
+$email = filter_var($input->email, FILTER_SANITIZE_STRING);
+$firstname = filter_var($input->firstname, FILTER_SANITIZE_STRING);
+$lastname = filter_var($input->lastname, FILTER_SANITIZE_STRING);
+$address = filter_var($input->address, FILTER_SANITIZE_STRING);
+$postalcode = filter_var($input->postalcode, FILTER_SANITIZE_STRING);
+$city = filter_var($input->city, FILTER_SANITIZE_STRING);
+$phone = filter_var($input->phone, FILTER_SANITIZE_STRING);
 
 try {
     $db = slDB();
@@ -23,7 +24,8 @@ try {
     $query->bindValue(':phone',$phone,PDO::PARAM_STR);
     $query->execute();
     echo header('HTTP/1.1 200 OK');
-    echo "Päivittäminen onnistui";
+    $data = array('firstName' => $firstname, 'id' => $id, 'lastName' => $lastname, 'address' => $address, 'postalcode' => $postalcode, 'city' => $city, 'phone' => $phone, 'email' => $email);
+    echo json_encode($data);
 }
 catch (PDOException $pdoex) {
     returnError($pdoex);
