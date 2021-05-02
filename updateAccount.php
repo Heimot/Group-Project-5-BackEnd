@@ -4,7 +4,6 @@ require_once 'inc/headers.php';
 
 $input = json_decode(file_get_contents('php://input'));
 $id = filter_var($input->id, FILTER_SANITIZE_NUMBER_INT);
-$email = filter_var($input->email, FILTER_SANITIZE_STRING);
 $firstname = filter_var($input->firstname, FILTER_SANITIZE_STRING);
 $lastname = filter_var($input->lastname, FILTER_SANITIZE_STRING);
 $address = filter_var($input->address, FILTER_SANITIZE_STRING);
@@ -24,7 +23,7 @@ try {
     $query->bindValue(':phone',$phone,PDO::PARAM_STR);
     $query->execute();
     echo header('HTTP/1.1 200 OK');
-    $data = array('firstName' => $firstname, 'id' => $id, 'lastName' => $lastname, 'address' => $address, 'postalcode' => $postalcode, 'city' => $city, 'phone' => $phone, 'email' => $email);
+    $data = array('firstName' => $firstname, 'id' => $id, 'lastName' => $lastname, 'address' => $address, 'postalcode' => $postalcode, 'city' => $city, 'phone' => $phone);
     echo json_encode($data);
 }
 catch (PDOException $pdoex) {

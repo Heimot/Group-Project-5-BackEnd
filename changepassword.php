@@ -14,7 +14,7 @@ try {
     $query = 'select firstname from customers where id=:id and password =:oldpassword';
     $query = $db->prepare($query);
     $query->bindParam('id', $id, PDO::PARAM_STR);
-    $query->bindValue('oldpassword', md5($oldpassword), PDO::PARAM_STR);
+    $query->bindValue('oldpassword', password_hash($oldpassword,PASSWORD_DEFAULT), PDO::PARAM_STR);
     $query->execute();
 
     $row = $query->fetch();
@@ -24,7 +24,7 @@ try {
     } else {   
         $query2 = $db->prepare('update customers set password = :newpassword where id = :id ');
         $query2->bindValue(':id', $id, PDO::PARAM_STR);
-        $query2->bindValue(':newpassword', md5($newpassword), PDO::PARAM_STR);
+        $query2->bindValue(':newpassword', password_hash($newpassword,PASSWORD_DEFAULT), PDO::PARAM_STR);
         $query2->execute();
         
 
