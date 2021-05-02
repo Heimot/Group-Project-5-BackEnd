@@ -24,9 +24,10 @@ try {
         'postalcode' => $user->postalcode,
         'city' => $user->city,
         'phone' => $user->phone,
-        'email' => $user->email
+        'email' => $user->email,
+        'role' => $user->role,
       );
-      $_SESSION['user'] = $user;
+      $_SESSION['user'] = $data;
     } else {
         http_response_code(401);
       $data = array('message' => "Unsuccessfull login.");
@@ -35,7 +36,6 @@ try {
     http_response_code(401);
     $data = array('message' => "Unsuccessfull login.");
   }
-
   echo json_encode($data);
 } catch (PDOException $pdoex) {
   returnError($pdoex); 
