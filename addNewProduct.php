@@ -4,22 +4,22 @@ require_once 'inc/headers.php';
 
 $input = json_decode(file_get_contents('php://input'));
 $name = filter_var($input->name, FILTER_SANITIZE_STRING);
-$price = filter_var($input->price, FILTER_SANITIZE_NUMBER_INT);
+$price = filter_var($input->price, FILTER_SANITIZE_STRING);
 $categoryID = filter_var($input->categoryID, FILTER_SANITIZE_NUMBER_INT);
 $subCategoryID = filter_var($input->subCategoryID, FILTER_SANITIZE_NUMBER_INT);
 $description = filter_var($input->description, FILTER_SANITIZE_STRING);
-$weight = filter_var($input->weight, FILTER_SANITIZE_NUMBER_FLOAT);
+$weight = filter_var($input->weight, FILTER_SANITIZE_STRING);
 $stock = filter_var($input->stock, FILTER_SANITIZE_NUMBER_INT);
 
 try {
     $db = slDB();
     $query = $db->prepare('insert into product(name,price,categoryID,subCategoryID,description,weight,stock) values (:name,:price,:categoryID,:subCategoryID,:description,:weight,:stock)');
     $query->bindValue(':name',$name,PDO::PARAM_STR);
-    $query->bindValue(':price',$price,PDO::PARAM_INT);
+    $query->bindValue(':price',$price,PDO::PARAM_STR);
     $query->bindValue(':categoryID',$categoryID,PDO::PARAM_INT);
     $query->bindValue(':subCategoryID',$subCategoryID,PDO::PARAM_INT);
     $query->bindValue(':description',$description,PDO::PARAM_STR);
-    $query->bindValue(':weight',$weight,PDO::PARAM_INT);
+    $query->bindValue(':weight',$weight,PDO::PARAM_STR);
     $query->bindValue(':stock',$stock,PDO::PARAM_INT);
     $query->execute();
     $last_id = $db->lastInsertId();
